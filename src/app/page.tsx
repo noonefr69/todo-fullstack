@@ -6,6 +6,7 @@ import { Ghost, Smile } from "lucide-react";
 
 export default async function Home() {
   const session = await auth();
+
   return (
     <div>
       <div className="grid grid-cols-12 mx-7 gap-7">

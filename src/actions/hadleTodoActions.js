@@ -13,9 +13,9 @@ import { revalidatePath } from "next/cache";
 
 export async function handleGet() {
   const session = await auth();
-  // if (!session?.user?.email) {
-  //   throw new Error("Unauthorized");
-  // }
+  if (!session?.user?.email) {
+    throw new Error("Unauthorized");
+  }
 
   await dbConnect();
 
@@ -50,6 +50,16 @@ export async function handleDelete(id) {
   await dbConnect();
 
   await Todo.findOneAndDelete({ _id: id, userEmail: session?.user?.email });
+
+  revalidatePath("/");
+}
+
+export async function handleDeleteAll() {
+  const session = await auth();
+
+  await dbConnect();
+
+  await Todo.deleteMany({ userEmail: session?.user?.email });
 
   revalidatePath("/");
 }

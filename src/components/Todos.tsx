@@ -3,15 +3,18 @@ import { handleGet } from "@/actions/hadleTodoActions";
 import Checked from "./Checked";
 import { Edit } from "lucide-react";
 import Delete from "./Delete";
+import DeleteAll from "./DeleteAll";
 
 type Todo = {
-  _id: string;
+  _id: { $oid: string };
   title: string;
   completed: boolean;
 };
 
 export default async function Todos() {
   const todos = await handleGet();
+
+  console.log(todos);
 
   return (
     <div className="flex flex-col justify-between px-3 py-7 shadow-sm h-[calc(100vh-37vh)] overflow-y-auto dark:shadow-amber-50 rounded-lg">
@@ -45,10 +48,17 @@ export default async function Todos() {
           );
         })}
       </ul>
-      <div className="dark:bg-[rgb(36,36,36)] bg-slate-100 rounded-md mt-3 flex justify-between px-4 py-2 w-full duration-300">
-        <div>All</div>
-        <div>Showing</div>
-        <div>ClearAll</div>
+      <div className="relative dark:bg-[rgb(36,36,36)] bg-slate-100 rounded-md mt-3 flex justify-between px-4 py-2 w-full duration-300">
+        <div className="font-semibold">
+          {
+            todos.filter((todo) => {
+              return todo.completed;
+            }).length
+          }{" "}
+          out {todos.length}
+        </div>
+        <div className="absolute left-1/2 -translate-x-1/2">Showing</div>
+        <DeleteAll />
       </div>
     </div>
   );
