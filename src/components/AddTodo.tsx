@@ -5,6 +5,7 @@ import React from "react";
 
 export default async function AddTodo() {
   const session = await auth();
+
   return session?.user ? (
     <div className="py-14 shadow-sm dark:shadow-amber-50 rounded-lg mb-7 ">
       <form action={handlePost} className="flex px-5 gap-5 items-center">
