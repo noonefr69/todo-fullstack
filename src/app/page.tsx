@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import AddTodo from "@/components/AddTodo";
 import Authentication from "@/components/Authentication";
+import Calender from "@/components/Calender";
 import Todos from "@/components/Todos";
 import { Ghost, Smile } from "lucide-react";
 
@@ -33,7 +34,9 @@ export default async function Home() {
             </div>
           )}
         </div>
-        <div className="col-span-3">s</div>
+        <div className="col-span-3">
+          <Calender />
+        </div>
       </div>
     </div>
   );

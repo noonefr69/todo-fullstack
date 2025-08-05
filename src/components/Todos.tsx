@@ -57,7 +57,7 @@ export default async function Todos() {
           }{" "}
           out {todos.length}
         </div>
-        <div className="absolute left-1/2 -translate-x-1/2">Showing</div>
+        {/* <div className="absolute left-1/2 -translate-x-1/2">Showing</div> */}
         <DeleteAll />
       </div>
     </div>
