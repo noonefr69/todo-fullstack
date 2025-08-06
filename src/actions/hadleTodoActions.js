@@ -27,7 +27,7 @@ export async function handleGet() {
 export async function handlePost(formData) {
   const title = formData.get("title");
 
-  if (!title || title === "") throw new Error("No title provided");
+  if (!title || title.trim() === "") throw new Error("No title provided");
 
   const session = await auth();
   if (!session?.user?.email) {
