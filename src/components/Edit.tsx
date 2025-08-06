@@ -1,10 +1,17 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Edit } from "lucide-react";
+import { Edit, Loader } from "lucide-react";
 import { handleUpdate } from "@/actions/hadleTodoActions";
 import { useRouter } from "next/navigation";
 
@@ -16,12 +23,14 @@ type Props = {
 export default function EditDialog({ id, initialTitle }: Props) {
   const [title, setTitle] = useState(initialTitle);
   const [isPending, startTransition] = useTransition();
+  const [open, setOpen] = useState(false); // ✅ کنترل باز/بسته بودن
   const router = useRouter();
 
   const handleSubmit = () => {
     startTransition(async () => {
       try {
         await handleUpdate(id, title);
+        setOpen(false); // ✅ بستن دیالوگ بعد از ذخیره
         router.refresh();
       } catch (error) {
         console.error("Update failed:", error);
@@ -30,7 +39,7 @@ export default function EditDialog({ id, initialTitle }: Props) {
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Edit
           size={20}
@@ -43,9 +52,19 @@ export default function EditDialog({ id, initialTitle }: Props) {
         </DialogHeader>
         <Input value={title} onChange={(e) => setTitle(e.target.value)} />
         <DialogFooter>
-          <Button className="cursor-pointer" disabled={isPending} onClick={handleSubmit}>
-            Save
-          </Button>
+          {isPending ? (
+            <Button disabled={true}>
+              <Loader className="animate-spin" />
+            </Button>
+          ) : (
+            <Button
+              className="cursor-pointer"
+              disabled={isPending}
+              onClick={handleSubmit}
+            >
+              Save
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>

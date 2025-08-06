@@ -3,13 +3,8 @@
 import { auth } from "@/auth";
 import dbConnect from "@/lib/db";
 import Todo from "@/models/todo";
+import { TodoType } from "@/types/todo";
 import { revalidatePath } from "next/cache";
-
-// type TodoProps = {
-//   _id: string,
-//   title: string,
-//   completed: boolean,
-// };
 
 export async function handleGet() {
   const session = await auth();
@@ -19,17 +14,20 @@ export async function handleGet() {
 
   await dbConnect();
 
-  const todos = Todo.find({ userEmail: session?.user?.email }).lean();
+  const todos = await Todo.find({ userEmail: session?.user?.email }).lean<TodoType[]>();
 
   return todos;
 }
 
-export async function handlePost(formData) {
+export async function handlePost(formData: FormData) {
   const title = formData.get("title");
 
-  if (!title || title.trim() === "") throw new Error("No title provided");
+  if (typeof title !== "string" || title.trim() === "") {
+    throw new Error("No title provided");
+  }
 
   const session = await auth();
+
   if (!session?.user?.email) {
     throw new Error("Unauthorized");
   }
@@ -44,7 +42,7 @@ export async function handlePost(formData) {
   revalidatePath("/");
 }
 
-export async function handleDelete(id) {
+export async function handleDelete(id: string) {
   const session = await auth();
 
   await dbConnect();
@@ -64,7 +62,7 @@ export async function handleDeleteAll() {
   revalidatePath("/");
 }
 
-export async function handleUpdate(id, newTitle) {
+export async function handleUpdate(id: string, newTitle: string) {
   const session = await auth();
 
   if (!session?.user?.email) {
@@ -90,7 +88,7 @@ export async function handleUpdate(id, newTitle) {
   revalidatePath("/");
 }
 
-export async function toggleCompleted(id, completed) {
+export async function toggleCompleted(id: string, completed: boolean) {
   const session = await auth();
   // if (!session?.user?.email) {
   //   throw new Error("Unauthorized");
@@ -103,5 +101,5 @@ export async function toggleCompleted(id, completed) {
     { completed }
   );
 
-  revalidatePath("/"); // Optional, to refresh data
+  revalidatePath("/");
 }

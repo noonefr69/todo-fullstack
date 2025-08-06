@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, { useTransition } from "react";
 import { handleDelete } from "@/actions/hadleTodoActions";
 import { Loader, Trash } from "lucide-react";
 

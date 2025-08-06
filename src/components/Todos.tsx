@@ -1,20 +1,13 @@
 import React from "react";
 import { handleGet } from "@/actions/hadleTodoActions";
 import Checked from "./Checked";
-import { Edit } from "lucide-react";
 import Delete from "./Delete";
 import DeleteAll from "./DeleteAll";
-import Link from "next/link";
 import EditDialog from "./Edit";
-
-type Todo = {
-  _id: { $oid: string };
-  title: string;
-  completed: boolean;
-};
+import { TodoType } from "@/types/todo";
 
 export default async function Todos() {
-  const todos = await handleGet();
+  const todos: TodoType[] = await handleGet();
 
   console.log(todos);
 
@@ -41,12 +34,6 @@ export default async function Todos() {
               </div>
               <div className="flex items-center gap-2">
                 <Delete id={todo._id.toString()} />
-                {/* <Link href={`?edit/${todo._id.toString()}`}>
-                  <Edit
-                    size={20}
-                    className="cursor-pointer duration-300 text-slate-500 dark:text-slate-400 dark:hover:text-slate-50 hover:text-slate-800"
-                  />
-                </Link> */}
                 <EditDialog
                   id={todo._id.toString()}
                   initialTitle={todo.title}

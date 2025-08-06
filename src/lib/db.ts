@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export default async function dbConnect() {
-  let uri = process.env.MONGODB_URI;
+  const uri = process.env.MONGODB_URI;
 
   if (!uri) throw new Error(`There is no such as uri`);
 

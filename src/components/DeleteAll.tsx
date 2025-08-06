@@ -7,7 +7,7 @@ import React, { useTransition } from "react";
 export default function DeleteAll() {
   const [isPending, startTransition] = useTransition();
 
-  function handleChange(formData: FormData) {
+  function handleChange() {
     startTransition(() => {
       handleDeleteAll();
     });
@@ -21,7 +21,9 @@ export default function DeleteAll() {
         <button
           className="font-semibold cursor-pointer hover:underline"
           type="submit"
-        >Clear All</button>
+        >
+          Clear All
+        </button>
       )}
     </form>
   );
