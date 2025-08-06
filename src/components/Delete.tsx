@@ -12,15 +12,18 @@ export default function Delete({ id }: Props) {
   const [isPending, startTransition] = useTransition();
 
   function handleChange() {
-    startTransition(() => {
-      handleDelete(id);
-    });
+    const confirmed = confirm(`Are you sure?`);
+    if (confirmed) {
+      startTransition(() => {
+        handleDelete(id);
+      });
+    }
   }
 
   return (
     <div onClick={handleChange}>
       {isPending ? (
-        <Loader className="animate-spin" size={20}/>
+        <Loader className="animate-spin" size={20} />
       ) : (
         <Trash
           size={20}

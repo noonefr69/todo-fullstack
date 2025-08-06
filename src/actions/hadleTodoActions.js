@@ -64,6 +64,32 @@ export async function handleDeleteAll() {
   revalidatePath("/");
 }
 
+export async function handleUpdate(id, newTitle) {
+  const session = await auth();
+
+  if (!session?.user?.email) {
+    throw new Error("Unauthorized");
+  }
+
+  if (!id || !newTitle.trim()) {
+    throw new Error("Invalid input");
+  }
+
+  await dbConnect();
+
+  const updated = await Todo.findOneAndUpdate(
+    { _id: id, userEmail: session.user.email }, // filter
+    { title: newTitle }, // update
+    { new: true } // return the updated document
+  );
+
+  if (!updated) {
+    throw new Error("Todo not found or unauthorized");
+  }
+
+  revalidatePath("/");
+}
+
 export async function toggleCompleted(id, completed) {
   const session = await auth();
   // if (!session?.user?.email) {
