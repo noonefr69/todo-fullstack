@@ -11,10 +11,10 @@ export default async function Home() {
   return (
     <div>
       <div className="grid grid-cols-12 mx-7 gap-7">
-        <div className="col-span-3">
+        <div className="lg:col-span-3 hidden lg:block">
           <Authentication />
         </div>
-        <div className="col-span-6">
+        <div className="col-span-12 lg:col-span-6">
           {session?.user ? (
             <>
               <AddTodo />
@@ -27,14 +27,14 @@ export default async function Home() {
                 Welcome! Please sign in with Google to access your personalized
                 experience
               </h1>
-              <h1 className="flex flex-col animate-pulse items-center justify-center text-center">
-                You can sign in from your left side
-                <Smile />
+              <h1 className="flex flex-col animate-pulse  items-center justify-center text-center">
+                You can sign in from your left side or menu bar if you using mobile
+                <Smile className="mt-3"/>
               </h1>
             </div>
           )}
         </div>
-        <div className="col-span-3">
+        <div className="hidden lg:block lg:col-span-3">
           <Calender />
         </div>
       </div>

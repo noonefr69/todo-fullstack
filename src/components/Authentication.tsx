@@ -28,7 +28,7 @@ export default async function Authentication() {
           <p className="text-lg mb-1">
             Hello <span className="font-bold">{session?.user?.name}</span>
           </p>
-          <p className="text-lg mb-7">Welcome to Todo App</p>
+          <p className="text-lg mb-7 text-center">Welcome to Todo App</p>
           <button
             className="shadow-sm py-2 dark:shadow-amber-50 duration-300 hover:ring-1 px-7 rounded-md cursor-pointer"
             type="submit"
