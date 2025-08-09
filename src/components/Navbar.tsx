@@ -19,7 +19,7 @@ export default function Navbar() {
         <Link className="text-2xl font-bold" href={`/`}>
           ToDo
         </Link>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 md:gap-0">
           <Toggle />
           <Sheet>
             <SheetTrigger>
